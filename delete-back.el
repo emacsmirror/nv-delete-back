@@ -35,16 +35,16 @@
 (defun delete-back-all ()
   "Backward deletes either (i) all empty lines, or (ii) one whole word, or (iii) a single non-word character."
   (interactive)
-  (if (not (or (looking-back "[\s-]")
-               (looking-back "[\n]")
+  (if (not (or (looking-back "[\s-]" 1 nil)
+               (looking-back "[\n]" 1 nil)
                )
            )
       ;;then
       (delete-back-word)
     ;;else
     (while
-        (or (looking-back "[\n]")
-            (looking-back "[\s-]")
+        (or (looking-back "[\n]" 1 nil)
+            (looking-back "[\s-]" 1 nil)
             )
       (delete-char -1)
       )
@@ -56,12 +56,12 @@
 (defun delete-back ()
   "Backward-deletes either (i) all spaces, (ii) one whole word, or (iii) a single non-word/non-space character."
   (interactive)
-  (if (not (looking-back "[\s-]"))
+  (if (not (looking-back "[\s-]" 1 nil))
       ;;then
       (delete-back-word)
     ;;else
     (while
-        (looking-back "[\s-]")
+        (looking-back "[\s-]" 1 nil)
       (delete-char -1)
       )
     )
@@ -72,14 +72,14 @@
 (defun delete-back-word ()
   "Backward-deletes either (i) one whole word, or (ii) a single non-word char."
   (interactive)
-  (if (looking-back "[[:alnum:]]")
+  (if (looking-back "[[:alnum:]]" 1 nil)
       ;; then
       (while
-          (looking-back "[[:alnum:]]")
+          (looking-back "[[:alnum:]]" 1 nil)
         (delete-char -1)
         )
     ;; else
-    (if (looking-back "[^[:alnum:]]")
+    (if (looking-back "[^[:alnum:]]" 1 nil)
         (delete-char -1)
       )
     )
