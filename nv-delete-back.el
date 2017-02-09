@@ -1,4 +1,4 @@
-;;; delete-back.el --- backward delete like modern text editors -*- lexical-binding: t -*-
+;;; nv-delete-back.el --- backward delete like modern text editors -*- lexical-binding: t -*-
 
 ;; Copyright (C) 2017 Nicolas Vaughan
 
@@ -24,15 +24,15 @@
 
 ;; This package replicates the backward delete behavior of modern text editors like oXygen XML or Sublime Text.
 ;; Recomended binding (requires bind-key):
-;; (bind-key "C-<backspace>" 'delete-back-all)
-;; (bind-key "M-<backspace>" 'delete-back)
+;; (bind-key "C-<backspace>" 'nv-delete-back-all)
+;; (bind-key "M-<backspace>" 'nv-delete-back)
 
 
 ;;; Code:
 
 
 ;;;###autoload
-(defun delete-back-all ()
+(defun nv-delete-back-all ()
   "Backward deletes either (i) all empty lines, or (ii) one whole word, or (iii) a single non-word character."
   (interactive)
   (if (not (or (looking-back "[\s-]" 1 nil)
@@ -40,7 +40,7 @@
                )
            )
       ;;then
-      (delete-back-word)
+      (nv-delete-back-word)
     ;;else
     (while
         (or (looking-back "[\n]" 1 nil)
@@ -53,12 +53,12 @@
 
 
 ;;;###autoload
-(defun delete-back ()
+(defun nv-delete-back ()
   "Backward-deletes either (i) all spaces, (ii) one whole word, or (iii) a single non-word/non-space character."
   (interactive)
   (if (not (looking-back "[\s-]" 1 nil))
       ;;then
-      (delete-back-word)
+      (nv-delete-back-word)
     ;;else
     (while
         (looking-back "[\s-]" 1 nil)
@@ -69,7 +69,7 @@
 
 
 ;;;###autoload
-(defun delete-back-word ()
+(defun nv-delete-back-word ()
   "Backward-deletes either (i) one whole word, or (ii) a single non-word char."
   (interactive)
   (if (looking-back "[[:alnum:]]" 1 nil)
@@ -86,5 +86,5 @@
   )
 
 
-(provide 'delete-back)
-;;; delete-back.el ends here
+(provide 'nv-delete-back)
+;;; nv-delete-back.el ends here
