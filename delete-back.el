@@ -29,7 +29,9 @@
 
 
 ;;; Code:
-;;;
+
+
+;;;###autoload
 (defun delete-back-all ()
   "Backward deletes either (i) all empty lines, or (ii) one whole word, or (iii) a single non-word character."
   (interactive)
@@ -50,6 +52,7 @@
   )
 
 
+;;;###autoload
 (defun delete-back ()
   "Backward-deletes either (i) all spaces, (ii) one whole word, or (iii) a single non-word/non-space character."
   (interactive)
@@ -65,6 +68,7 @@
   )
 
 
+;;;###autoload
 (defun delete-backward-word ()
   "Backward-deletes either (i) one whole word, or (ii) a single non-word char."
   (interactive)
