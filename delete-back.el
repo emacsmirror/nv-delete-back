@@ -40,7 +40,7 @@
                )
            )
       ;;then
-      (delete-backward-word)
+      (delete-back-word)
     ;;else
     (while
         (or (looking-back "[\n]" 50 t)
@@ -58,7 +58,7 @@
   (interactive)
   (if (not (looking-back "[\s-]" 50 t))
       ;;then
-      (delete-backward-word)
+      (delete-back-word)
     ;;else
     (while
         (looking-back "[\s-]" 50 t)
@@ -69,7 +69,7 @@
 
 
 ;;;###autoload
-(defun delete-backward-word ()
+(defun delete-back-word ()
   "Backward-deletes either (i) one whole word, or (ii) a single non-word char."
   (interactive)
   (if (looking-back "[[:alnum:]]" 50 t)
