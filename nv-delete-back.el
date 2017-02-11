@@ -4,7 +4,7 @@
 
 ;; Author: Nicolas Vaughan <n.vaughan [at] oxon.org>
 ;; Keywords: lisp
-;; Version: 0.0.1
+;; Version: 0.0.2
 ;; Package-Requires: ((emacs "24"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -72,19 +72,24 @@
 (defun nv-delete-back-word ()
   "Backward-deletes either (i) one whole word, or (ii) a single non-word char."
   (interactive)
-  (if (looking-back "[[:alnum:]]" 1 nil)
+  ;; first check if text is selected
+  (if (region-active-p)
       ;; then
-      (while
-          (looking-back "[[:alnum:]]" 1 nil)
-        (delete-char -1)
+      (delete-region (region-beginning) (region-end))
+    ;;else
+    (if (looking-back "[[:alnum:]]" 1 nil)
+        ;; then
+        (while
+            (looking-back "[[:alnum:]]" 1 nil)
+          (delete-char -1)
+          )
+      ;; else
+      (if (looking-back "[^[:alnum:]]" 1 nil)
+          (delete-char -1)
         )
-    ;; else
-    (if (looking-back "[^[:alnum:]]" 1 nil)
-        (delete-char -1)
       )
     )
   )
-
 
 (provide 'nv-delete-back)
 ;;; nv-delete-back.el ends here
