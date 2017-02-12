@@ -69,24 +69,32 @@
 
 
 ;;;###autoload
-(defun nv-delete-back-word ()
-  "Backward-deletes either (i) one whole word, or (ii) a single non-word char."
-  (interactive)
-  ;; first check if text is selected
-  (if (region-active-p)
-      ;; then
-      (delete-region (region-beginning) (region-end))
-    ;;else
-    (if (looking-back "[[:alnum:]]" 1 nil)
-        ;; then
-        (while
-            (looking-back "[[:alnum:]]" 1 nil)
-          (delete-char -1)
+(defun nv-delete-back-word (&optional amount)
+  "Backward-deletes either (i) one whole word, or (ii) a single non-word character.  If AMOUNT is supplied, the function will delete AMOUNT times of words or non-word characters.  The function can also be called with a prefix."
+  (interactive "p")
+  ;; set default of 1 for optional argument 'amount'
+  (let ((amount (or amount 1)))
+    ;; begin our decreasing while loop
+    (while (>= amount 1)
+      (unless amount (setq amount 1))
+      ;; first check if text is selected
+      (if (region-active-p)
+          ;; then
+          (delete-region (region-beginning) (region-end))
+        ;;else
+        (if (looking-back "[[:alnum:]]" 1 nil)
+            ;; then
+            (while
+                (looking-back "[[:alnum:]]" 1 nil)
+              (delete-char -1)
+              )
+          ;; else
+          (if (looking-back "[^[:alnum:]]" 1 nil)
+              (delete-char -1)
+            )
           )
-      ;; else
-      (if (looking-back "[^[:alnum:]]" 1 nil)
-          (delete-char -1)
         )
+      (setq amount (1- amount))
       )
     )
   )
