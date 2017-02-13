@@ -76,12 +76,11 @@
   (let ((amount (or amount 1)))
     ;; begin our decreasing while loop
     (while (>= amount 1)
-      (unless amount (setq amount 1))
       ;; first check if text is selected
       (if (region-active-p)
           ;; then
           (delete-region (region-beginning) (region-end))
-        ;;else
+        ;;else: no region is active
         (if (looking-back "[[:alnum:]]" 1 nil)
             ;; then
             (while
