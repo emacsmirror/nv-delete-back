@@ -30,24 +30,48 @@
 
 ;;; Code:
 
-
 ;;;###autoload
 (defun nv-delete-back-all ()
   "Backward deletes either (i) all empty lines, or (ii) one whole word, or (iii) a single non-word character."
   (interactive)
-  (if (not (or (looking-back "[\s-]" 1 nil)
-               (looking-back "[\n]" 1 nil)
-               )
-           )
-      ;;then
-      (nv-delete-back-word)
-    ;;else
-    (while
-        (or (looking-back "[\n]" 1 nil)
-            (looking-back "[\s-]" 1 nil)
+  (let ((nl-p nil))
+    ;; First part:
+    ;; Look back and find if we have to do a full back-delete
+    (save-excursion
+      (while (looking-back "[\n\s-]" 1 nil)
+        (progn
+          (if (looking-back "[\s-]" 1 nil)
+              (while (looking-back "[\s-]" 1 nil)
+                (left-char 1))
             )
-      (delete-char -1)
+          (if (looking-back "[\n]" 1 nil)
+              (progn
+                (while (looking-back "[\n]" 1 nil)
+                  (left-char 1))
+                (setq nl-p t)
+                )
+            )
+          )
+        )
       )
+    ;; Second part:
+    ;; Do we have to do a full back-delete?
+    (if nl-p
+        (if (looking-back "[\n\s-]" 1 nil)
+            (while (looking-back "[\n\s-]" 1 nil)
+              (delete-char -1))
+          )
+      ;; else
+      (progn
+        ;; delete all trailing spaces
+        (if (looking-back "[\s-]" 1 nil)
+            (while (looking-back "[\s-]" 1 nil)
+              (delete-char -1))
+          )
+        (nv-delete-back-word 1)
+        )
+      )
+    ;; (if nl-p (message "t") (message "f"))
     )
   )
 
@@ -56,16 +80,20 @@
 (defun nv-delete-back ()
   "Backward-deletes either (i) all spaces, (ii) one whole word, or (iii) a single non-word/non-space character."
   (interactive)
-  (if (not (looking-back "[\s-]" 1 nil))
-      ;;then
-      (nv-delete-back-word)
-    ;;else
-    (while
-        (looking-back "[\s-]" 1 nil)
-      (delete-char -1)
+  (progn
+    (if (looking-back "[\n]" 1 nil)
+        ;; then
+        (delete-char -1)
+      ;; else
+      (progn
+        (while (looking-back "[[:space:]]" 1 nil)
+          (delete-char -1))
+        (nv-delete-back-word)
+        )
       )
     )
   )
+
 
 
 ;;;###autoload
@@ -78,23 +106,31 @@
     (while (>= amount 1)
       ;; first check if text is selected
       (if (region-active-p)
-          ;; then
+          ;; then:
           (delete-region (region-beginning) (region-end))
-        ;;else: no region is active
-        (if (looking-back "[[:alnum:]]" 1 nil)
-            ;; then
-            (while
-                (looking-back "[[:alnum:]]" 1 nil)
-              (delete-char -1)
+        ;;
+        ;; else:
+        (progn
+          ;; now, first check if there are any spaces
+          (if (looking-back "[[:space:]]" 1 nil)
+              ;; then, delete all spaces
+              (while (looking-back "[[:space:]]" 1 nil)
+                (delete-char -1))
+            ) ;; space if
+          ;; second, proceed to check if there is a word
+          (if (looking-back "[[:alnum:]]" 1 nil)
+              ;; then proceed to back-delete it
+              (while (looking-back "[[:alnum:]]" 1 nil)
+                (delete-char -1))
+            ;; else: check whether there is a non-word-non-space char
+            (if (looking-back "[^[:alnum:][:space:]\n]" 1 nil)
+                (delete-char -1)
               )
-          ;; else
-          (if (looking-back "[^[:alnum:]]" 1 nil)
-              (delete-char -1)
             )
           )
         )
       (setq amount (1- amount))
-      )
+      ) ;; while loop ends here
     )
   )
 
