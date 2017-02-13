@@ -58,20 +58,21 @@
     ;; Do we have to do a full back-delete?
     (if nl-p
         (if (looking-back "[\n\s-]" 1 nil)
+            ;; delete all spaces and newline chars behind the point
             (while (looking-back "[\n\s-]" 1 nil)
               (delete-char -1))
           )
-      ;; else
+      ;; else, delete one word
       (progn
         ;; delete all trailing spaces
         (if (looking-back "[\s-]" 1 nil)
             (while (looking-back "[\s-]" 1 nil)
               (delete-char -1))
           )
+        ;; delete one word
         (nv-delete-back-word 1)
         )
       )
-    ;; (if nl-p (message "t") (message "f"))
     )
   )
 
@@ -81,13 +82,16 @@
   "Backward-deletes either (i) all spaces, (ii) one whole word, or (iii) a single non-word/non-space character."
   (interactive)
   (progn
+    ;; Do we have a newline char behind the point?
     (if (looking-back "[\n]" 1 nil)
-        ;; then
+        ;; then, delete the newline char
         (delete-char -1)
       ;; else
       (progn
+        ;; delete all spaces behind the point
         (while (looking-back "[[:space:]]" 1 nil)
           (delete-char -1))
+        ;; and finally delete one word
         (nv-delete-back-word)
         )
       )
