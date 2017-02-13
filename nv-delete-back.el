@@ -4,7 +4,7 @@
 
 ;; Author: Nicolas Vaughan <n.vaughan [at] oxon.org>
 ;; Keywords: lisp
-;; Version: 0.0.2
+;; Version: 0.0.3
 ;; Package-Requires: ((emacs "24"))
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -93,7 +93,6 @@
       )
     )
   )
-
 
 
 ;;;###autoload
