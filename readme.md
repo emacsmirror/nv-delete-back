@@ -16,11 +16,11 @@ Backward-deletes either (i) one whole word, or (ii) a single non-word character.
 # Compared to standard Emacs back-delete functions
 ## This is the standard behavior of `backward-kill-word`. Note how Emacs kills the word at the end of the previous line.
 
-![backward-kill-word](/backward-kill-word.gif)
+![backward-kill-word](/images/backward-kill-word.gif)
 
 ## This is the behavior of `nv-delete-back-all`. Note that the deletion stops at the last line containing text.
 
-![nv-delete-back-all](/nv-delete-back-all.gif)
+![nv-delete-back-all](/images/nv-delete-back-all.gif)
 
 # Suggested bindings (requires `bind-key`)
 
