@@ -13,6 +13,15 @@ Backward-deletes either (i) all spaces, (ii) one whole word, or (iii) a single n
 # `(nv-delete-back-word &optional amount)`
 Backward-deletes either (i) one whole word, or (ii) a single non-word character. If `amount` is supplied, the function will delete `amount` times of words or non-word characters. The function can also be called with a prefix. E.g. `C-u 5 M-x nv-delete-back-word` is equivalent to `(nv-delete-back-word 5)`.
 
+# Compared to standard Emacs back-delete functions
+## This is the standard behavior of `backward-kill-word`. Note how Emacs kills the word at the end of the previous line.
+
+![backward-kill-word](/backward-kill-word.gif)
+
+## This is the behavior of `nv-delete-back-all`. Note that the deletion stops at the last line containing text.
+
+![nv-delete-back-all](/nv-delete-back-all.gif)
+
 # Suggested bindings (requires `bind-key`)
 
 ```lisp
