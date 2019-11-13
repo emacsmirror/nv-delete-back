@@ -7,7 +7,7 @@ The package `nv-delete-back` replicates the backward delete behavior of modern t
 # `(nv-delete-back-all)`
 Backward deletes either (i) all empty lines, or (ii) one whole word, or (iii) a single non-word character. (This replicates the behaviour of `Ctrl-Backspace` in oxYgen XML Editor.)
 
-# `(nv-nv-delete-back)`
+# `(nv-delete-back)`
 Backward-deletes either (i) all spaces, (ii) one whole word, or (iii) a single non-word/non-space character. (This replicates the behaviour of `Ctrl-Backspace` in Sublime Text.)
 
 # `(nv-delete-back-word &optional amount)`
