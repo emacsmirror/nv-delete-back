@@ -22,9 +22,13 @@ Backward-deletes either (i) one whole word, or (ii) a single non-word character.
 
 ![nv-delete-back-all](/images/nv-delete-back-all.gif)
 
-# Suggested bindings (requires `bind-key`)
-
+# Loading the package with `use-package`
 ```lisp
-(bind-key "C-<backspace>" 'nv-delete-back-all)
-(bind-key "M-<backspace>" 'nv-delete-back)
+(use-package nv-delete-back
+ :ensure t
+ :bind
+ ;; Suggested bindings
+ (("C-<backspace>" . nv-delete-back-all)
+   ("M-<backspace>" . nv-delete-back))
+ )
 ```
